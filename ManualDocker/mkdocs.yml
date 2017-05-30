@@ -1,0 +1,34 @@
+site_name: SAPP
+pages:
+- Home: index.md
+- Web Interface: 'galaxy/galaxy.md'
+- Modules:
+  - QuickStart: quickstart.md
+  - Conversion:
+    - Main: 'modules/conversion/main.md'
+    - EMBL2RDF: 'modules/conversion/embl2rdf.md'
+    - FASTA2RDF: 'modules/conversion/fasta2rdf.md'
+    - GFF2RDF: 'modules/conversion/gff2rdf.md'
+    - HDT2RDF: 'modules/conversion/hdt2rdf.md'
+    - Merge: 'modules/conversion/merge.md'
+    - RDF2EMBL: 'modules/conversion/rdf2embl.md'
+    - RDF2FASTA: 'modules/conversion/rdf2fasta.md'
+    - RDF2EMBL: 'modules/conversion/rdf2flatfile.md'
+    - RDF2GTF: 'modules/conversion/rdf2gtf.md'
+  - Genetic Elements:
+    - Crispr: 'modules/geneticelements/crispr.md'
+    - Gene prediction: 'modules/geneticelements/geneprediction.md'
+    - tRNA/tmRNA: 'modules/geneticelements/trnatmrna.md'
+    - rRNA: 'modules/geneticelements/rrna.md'
+  - Protein Annotation:
+    - InterPro: 'modules/proteins/interpro.md'
+    - BLAST: 'modules/proteins/blast.md'
+    - Priam: 'modules/proteins/priam.md'
+    - SignalP: 'modules/proteins/signalp.md'
+    - WoLFPSORT: 'modules/proteins/wolfpsort.md'
+- Installation: installation.md
+- Requirements: requirements.md
+- Contributors: contributors.md
+- Reproducibility: reproducibility.md
+
+theme: material

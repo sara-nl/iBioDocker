@@ -1,0 +1,18 @@
+##sequence-region J01636.1 1 7477
+##species https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=562
+J01636.1	Genbank	region	1	7477	.	+	.	ID=id0;Dbxref=taxon:562;gbkey=Src;mol_type=genomic DNA
+J01636.1	Genbank	mRNA	51	1230	.	+	.	ID=rna0;Note=lacI (repressor) mRNA%3B preferred in vivo 3' end [12]%2C[29];gbkey=mRNA
+J01636.1	Genbank	exon	51	1230	.	+	.	ID=id2;Parent=rna0;Note=lacI (repressor) mRNA%3B preferred in vivo 3' end [12]%2C[29];gbkey=mRNA
+J01636.1	Genbank	gene	79	1161	.	+	.	ID=gene0;Name=lacI;gbkey=Gene;gene=lacI;gene_biotype=protein_coding
+J01636.1	Genbank	CDS	79	1161	.	+	0	ID=cds0;Parent=gene0;Dbxref=NCBI_GP:AAA24052.1;Name=AAA24052.1;gbkey=CDS;gene=lacI;product=AAA24052.1;protein_id=AAA24052.1;transl_table=11
+J01636.1	Genbank	regulatory_region	1162	1199	.	+	.	ID=id3;Note=cap protein binding site;gbkey=misc_signal
+J01636.1	Genbank	mRNA	1246	4358	.	+	.	ID=rna1;Note=lacZ mRNA [2]%2C[5];end_range=4358,.;gbkey=mRNA;partial=true
+J01636.1	Genbank	exon	1246	4358	.	+	.	ID=id10;Parent=rna1;Note=lacZ mRNA [2]%2C[5];end_range=4358,.;gbkey=mRNA;partial=true
+J01636.1	Genbank	regulatory_region	1246	1266	.	+	.	ID=id11;Note=lac repressor protein binding site;gbkey=misc_signal
+J01636.1	Genbank	gene	1284	4358	.	+	.	ID=gene1;Name=lacZ;gbkey=Gene;gene=lacZ;gene_biotype=protein_coding
+J01636.1	Genbank	CDS	1284	4358	.	+	0	ID=cds1;Parent=gene1;Dbxref=NCBI_GP:AAA24053.1;Name=AAA24053.1;gbkey=CDS;gene=lacZ;product=AAA24053.1;protein_id=AAA24053.1;transl_table=11
+J01636.1	Genbank	gene	4410	5663	.	+	.	ID=gene2;Name=lacY;gbkey=Gene;gene=lacY;gene_biotype=protein_coding
+J01636.1	Genbank	CDS	4410	5663	.	+	0	ID=cds2;Parent=gene2;Dbxref=NCBI_GP:AAA24054.1;Name=AAA24054.1;gbkey=CDS;gene=lacY;product=AAA24054.1;protein_id=AAA24054.1;transl_table=11
+J01636.1	Genbank	gene	5727	6338	.	+	.	ID=gene3;Name=lacA;gbkey=Gene;gene=lacA;gene_biotype=protein_coding
+J01636.1	Genbank	CDS	5727	6338	.	+	0	ID=cds3;Parent=gene3;Dbxref=NCBI_GP:AAA24055.1;Name=AAA24055.1;gbkey=CDS;gene=lacA;product=AAA24055.1;protein_id=AAA24055.1;transl_table=11
+

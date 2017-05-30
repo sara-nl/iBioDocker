@@ -1,0 +1,54 @@
+---
+
+api_key: admin
+galaxy_instance: http://localhost:8080
+tools:
+
+
+# Genetic Elements
+## Software not available
+# - name: rnammer
+#   owner: lionelguy
+#   tool_panel_section_label: "Genetic Elements"
+#   tool_shed_url: https://toolshed.g2.bx.psu.edu
+#   install_resolver_dependencies: True
+#   # install_tool_dependencies: False
+#   revisions:
+#   - 708bb17a1efd
+
+#- name: trna_prediction
+#  owner: bgruening
+#  tool_panel_section_label: "Genetic Elements"
+#  tool_shed_url: https://toolshed.g2.bx.psu.edu
+#  install_resolver_dependencies: True
+#  # install_tool_dependencies: False
+#  revisions:
+#  - d788d1abe238
+
+- name: package_prodigal_2_60
+  owner: iuc
+  tool_panel_section_label: "Genetic Elements"
+  tool_shed_url: https://toolshed.g2.bx.psu.edu
+  install_resolver_dependencies: True
+  # install_tool_dependencies: False
+  revisions:
+  - 9ec3f1e9198e
+  
+- name: prodigal
+  owner: edward-kirton
+  tool_panel_section_label: "Genetic Elements"
+  tool_shed_url: https://toolshed.g2.bx.psu.edu
+  install_resolver_dependencies: True
+  # install_tool_dependencies: False
+  revisions:
+  - 4ae1f52fda0f
+
+- name: crispr_recognition_tool
+  owner: bgruening
+  tool_panel_section_label: "Genetic Elements"
+  tool_shed_url: https://toolshed.g2.bx.psu.edu
+  install_resolver_dependencies: True
+  # install_tool_dependencies: False
+  revisions:
+  - db0f5c1cb227
+

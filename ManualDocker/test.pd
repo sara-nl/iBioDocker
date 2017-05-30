@@ -1,0 +1,1211 @@
+# Home
+
+#### SAPP
+**Semantic Annotation Platform with Provenance**
+
+SAPP is a Semantic Annotation Platform with Provenance and is designed on the basis of Semantic Web.
+The platform or its modules allows you to annotate genomes of various qualities with the full chain of provenance.
+Resulting is a RDF genome data model which you can query and analyse using SPARQL.
+Various modules are available which allows you to annotate, visualize and export to various formats.
+
+For a global overview of the modules available look under the Modules section on the left. The modules are broken up into three subsections. The **Conversion** section, allowing to convert various formats to the RDF data model. **Genetic elements** contains modules for the prediction of Crispr repeats, genes, tRNA, tmRNA and rRNAs with each containing a corresponding RDF model. **Protien annotation** contains modules to further annotate the proteins either predicted using the gene prediction module or through the conversion modules.
+
+ * Please submit bug reports and feature suggestions, [here...](https://gitlab.com/sapp/sapp/issues)
+
+# Web Interface
+
+
+Galaxy
+------
+
+Welcome to the Semantic Annotation Pipeline with Provenance (SAPP). This platform has been developed using semantic technologies and the backend is using the RDF framework and SPARQL as query language.
+
+For more information regarding RDF I would advise you to look into JENA and for SPARQL into http://learningsparql.com
+
+The platform has been designed from a bacterial point of view. However it possible to use most of the modules for higher organisms. However with very large genomes (100+ megabases) this platform has not been thoroughly tested and might cause dramatic reduction of performance.
+
+If you have any further recommendations, comments or requests feel free to contact me at [j...@gmail.com](http://www.google.com/recaptcha/mailhide/d?k=01CL3c1VOwM2lbkzJUidYGIA==&c=WEgy1Yo1owvdNCpMpT3klJBmBglN_OVR4lm86ZXtXk0=)
+
+
+Upload module
+-------------------
+
+This platform can be used for the annotation of fasta (gene, protein, genome) and EMBL/GenBank files.
+
+For this tutorial I have selected the organism Pseudomonas putida KT2440 from the EBI website
+
+Through the site you can obtain the "text" link which can be directly loaded into Galaxy ![FLATFileImage](/Users/jasperkoehorst/GitLab/sapp/Manual/site/galaxy/images/icon.png).  Then click on the Paste/Fetch data and place the URL in the text box.
+
+[http://www.ebi.ac.uk/ena/data/view/AE015451&display=text]()
+
+![UPLOAD](/Users/jasperkoehorst/GitLab/sapp/Manual/site/galaxy/images/upload.png)
+
+
+The file will become available in the galaxy workflow system on the right:
+
+![UPLOAD](/Users/jasperkoehorst/GitLab/sapp/Manual/site/galaxy/images/workflow.png)
+
+
+EMBL/GenBank files
+------------------
+
+When you have loaded the EMBL file click on the module on the left to convert it to an RDF database SAPP Conversion > EMBL/GBK to RDF
+
+> Note: By clicking on the button this tutorial will be replaced by the input box. If you want to go back to the tutorial click on the Galaxy/SAPP logo on the top left of your window.
+
+
+ ![FLATFileImage](/Users/jasperkoehorst/GitLab/sapp/Manual/site/galaxy/images/FlatFile2RDF.png)
+
+
+If you are new to the Galaxy environment all modules and workflows are build up by first selecting the input file and optionally select specific features required for certain modules.
+
+This module translates EMBL or Genbank files to our self-defined genome ontology. It is designed in a dynamic manner generating an RDF database based on the features annotations of the original file.
+
+After conversion to an RDF database the file can be viewed as plain text or loaded into RDF capable databases such as JENA (which is used for loading the files into each SAPP module) or BlazeGraph and others.
+
+> Converting a Genbank or EMBL file to RDF allows you to query the data files in an intuitive manner. Multiple genomes can be converted and compared through SPARQL.
+
+Genetic elements
+-----------------
+
+After the conversion of the EMBL file to RDF, the original genome can be re-annotated using all kinds of modules. Genes, rRNAs, tRNAs, Crispr features can be predicted beside the already existing genes found in the original EMBL file.
+
+To for example predict genes with Prodigal and eventually to compare the results with the original genes present the following module can be used:
+
+**SAPP Genetic Elements > Gene prediction**
+
+ ![FLATFileImage](/Users/jasperkoehorst/GitLab/sapp/Manual/site/galaxy/images/geneprediction.png)
+
+First the RDF file is selected of a converted genome on which gene prediction needs to be performed. Then the codon table either 4 or 11 (default) can be selected and wether it is a metagenomic or single genome sample.
+
+
+
+Fasta to RDF
+------------
+
+Another option is to translate fasta files into the RDF format using the fasta module in the conversion tab. These files can be either gene, protein or genome fasta files and maintain the same structure as the EMBL/Genbank conversion making it possible to merge multiple RDF files into a single database and/or use them for other modules.
+
+**After the conversion of either EMBL/Genbank or fasta to RDF the modules explained below can be used further. Needless to say is that when a genome fasta file is converted to RDF protein annotation can only be performed after the gene calling module. Gene or Protein fasta files can of course be directly further annotated using those modules but genetic element prediction tools are then not working as the genome sequence is not present....
+**
+
+## QuickStart
+
+Quick Start
+------------
+
+######Command line
+
+The fastest way of using any of the modules is by cloning any of the specific modules for your specific needs.
+
+In most cases you start with private or public data in one of the biological formats e.g. (fasta, embl, gff). The module responsible for the conversion of these files can be either downloaded as a zip file or directly cloned from: [http://gitlab.com/sapp/conversion](http://gitlab.com/sapp/conversion)
+
+
+### Main
+
+#### Conversion
+------------
+
+The conversion module consists of a wide variety of conversion possibilities.
+
+##### Source code
+
+
+* [GitLab](https://gitlab.com/sapp/conversion)
+
+
+##### Command line
+
+
+When the program is called a list of options become available to chose from of which conversions are available.
+
+	java -jar conversion-0.0.1-jar-with-dependencies.jar
+
+    Usage: <main class> [options]
+      Options:
+     --help
+
+       Default: true
+    -embl2rdf
+       input format is embl
+       Default: false
+    -fasta2rdf
+       input format is fasta
+       Default: false
+    -genbank2rdf
+       input format is genbank
+       Default: false
+    -gff2rdf
+       input format is GFF3 to create GBOL files
+       Default: false
+    -gtf2rdf
+       input format is GTF to create GBOL files
+       Default: false
+    -hdt2rdf, -rdf2hdt
+       Conversion of RDF to HDT or HDT to RDF
+       Default: false
+    -merge
+       Merging of HDT files
+       Default: false
+    -rdf2embl
+       input format is RDF to create EMBL files
+       Default: false
+    -rdf2fasta
+       input format is fasta
+       Default: false
+    -rdf2gtf
+       input format is RDF to create GTF files
+       Default: false
+
+
+
+### EMBL2RDF
+
+EMBL 2 RDF
+------------
+
+The EMBL 2 RDF module is capable of converting EMBL flatfiles files to the GBOL RDF format.
+
+
+Source code
+-----------
+* [GitLab](https://gitlab.com/sapp/conversion)
+
+Command line
+------
+    java -jar conversion-0.0.1-jar-with-dependencies.jar -embl2rdf
+
+	    -embl2rdf
+	       EMBL to RDF conversion
+	       Default: true
+	  * -i, -input
+	       Genome in the Flatfile format including sequences
+	  * -o, -output
+	       Output file in HDT GBOL format
+	  * -u, -uniqueidentifier
+	       Unique identifier for your sample (e.g. GCA_000001
+
+	  * required parameter
+
+Galaxy
+------
+
+
+
+Structure
+---------
+
+In theory there are an infinite possibilities of how the graph structure looks like as the flatfiles can be annotated in various ways. For this image we have used *Pseudomonas putida kt2440*, loaded it through the Galaxy interface and reconstructed the structure.
+
+![KT2440](/Users/jasperkoehorst/GitLab/sapp/Manual/site/modules/conversion/images/kt2440.png)
+
+### FASTA2RDF
+
+Fasta 2 RDF
+------------
+
+The FASTA 2 RDF module is capable of converting Gene/Protein/Genome FASTA files to the SAPP RDF format.
+
+Source code
+-----------
+* [GitLab](https://gitlab.com/sapp/conversion)
+
+Command line
+------
+
+	java -jar conversion-0.0.1-jar-with-dependencies.jar -fasta2rdf
+
+		Usage: <main class> [options]
+	  Options:
+	    --help
+
+	    -chromosome
+	       Genome fasta file consists of complete chromosomes
+	       Default: false
+	    -codon
+	       Codon table used for translating the genes
+	       Default: 0
+	    -contig
+	       Genome fasta file consists of contigs
+	       Default: false
+	    -debug
+	       Debug mode
+	       Default: false
+	    -fasta2rdf
+	       Fasta to RDF conversion
+	       Default: true
+	    -gene
+	       Fasta file consists of genes
+	       Default: false
+	    -genome
+	       Fasta file consists of genome sequences
+	       Default: false
+	  * -id, -identifier
+	       Unique identifier for your sample (e.g. GCA_000001
+	  * -i, -input
+	       input FASTA file
+	  * -org, -organism
+	       Organism name
+	  * -o, -output
+	       output file in HDT GBOL format
+	    -protein
+	       Fasta file consists of proteins
+	       Default: false
+	    -scaffold
+	       Genome fasta file consists of scaffolds
+	       Default: false
+	    -stopcodon
+	       Will not raise an exception when stop codons are detected during
+	       translation
+	       Default: false
+	    -translate
+	       Translate the input sequence to protein
+	       Default: false
+
+	  * required parameter
+
+
+Galaxy
+------
+A galaxy wrapper is included in the project. It requires a FASTA file as input file. Through a drop-down menu you can select wether it is a genome / protein or gene fasta file.
+
+A codon table can be supplied which allows you to translate gene sequences directly into protein sequences. The name of the organism and its NCBI taxonomy ID can be provided.
+
+Due to various reasons, stop codons, may be present within automatically translated protein sequences. By default it will raise an exception but this can be overruled through the **ignore if stop codon within protein sequence** option.
+
+If you want each conversion to have a unique identifier this can be given in the end. Additional identification tags can also be provided if required.
+
+![FASTA2RDF](/Users/jasperkoehorst/GitLab/sapp/Manual/site/modules/conversion/images/FASTA2RDF.png)
+
+
+Structure
+---------
+
+There are 3 different RDF structures possible (with a large overlap) depending on the input files.
+
+**Gene**
+![Gene](/Users/jasperkoehorst/GitLab/sapp/Manual/site/modules/conversion/images/FASTAGene.png)
+
+**Protein**
+=======
+![Protein](/Users/jasperkoehorst/GitLab/sapp/Manual/site/modules/conversion/images/FASTAProtein.png)
+
+**Genome**
+======
+![Genome](/Users/jasperkoehorst/GitLab/sapp/Manual/site/modules/conversion/images/FASTAGenome.png)
+
+### GFF2RDF
+
+GFF / GTF 2 RDF
+------------
+
+The GFF/GTF 2 RDF module is capable of converting existing GFF/GTF files into the RDF format
+
+Source code
+-----------
+* [GitLab](https://gitlab.com/sapp/conversion)
+
+Command line
+------
+	java -jar conversion-0.0.1-jar-with-dependencies.jar -gff2rdf
+
+	Usage: <main class> [options]
+	  Options:
+	    --help
+
+	  * -codon
+	       Codon table used (for protein translation)
+	       Default: 0
+	  * -f, -fasta
+	       input corresponding fasta file
+	    -gbol
+	       output HDT gbol file
+	    -gff2rdf
+	       GFF2 file input
+	    -gff32rdf
+	       GFF3 file input
+	    -gtf2rdf
+	       GTF file input
+	    -reorder
+	       Currently only GFF ordering as in Augustus is supported
+	       (Gene/mRNA/Exon/Cds/mRNa/Exon/Cds...Gene.... This module tries... to reorder your file according to the partent
+	       attribute
+	       Default: false
+	    -turtle
+	       output turtle file if the input genome is to big for memory and/or HDT
+	       (e.g. human)
+	  * -id, identifier
+	       Sample identifier
+
+	  * required parameter
+
+
+Galaxy
+------
+
+### HDT2RDF
+
+HDT 2 RDF
+------------
+
+The HDT 2 RDF module is capable of converting HDT (header/dictionary/triple) files back to plain text RDF such that it can be loaded into SPARQL endpoints directly or used in other software that do not support HDT
+
+Source code
+-----------
+* [GitLab](https://gitlab.com/sapp/conversion)
+
+Command line
+------
+	java -jar conversion-0.0.1-jar-with-dependencies.jar -hdt2rdf
+
+	The following options are required: -o, -output -i, -input
+	Usage: <main class> [options]
+	  Options:
+	    --help
+
+	    --prefix, -p
+	       Prefix reducer: 'prefix@url prefi2x@url2'
+	       Default: gbol@http://gbol.life# biopax@http://www.biopax.org/release/bp-level3.owl#
+	    -format
+	       RDF format (TURTLE/NT/...)
+	       Default: TURTLE
+	    -hdt2rdf
+	       Converting HDT to RDF
+	       Default: true
+	  * -i, -input
+	       input file (HDT/RDF)
+	  * -o, -output
+	       Output file (HDT/RDF)
+	    -rdf2hdt
+	       Converting RDF to HDT
+	       Default: false
+
+	  * required parameter
+
+
+Galaxy
+------
+
+### Merge
+
+HDT MERGE
+------------
+
+The merge module is capable of merging multiple HDT (header/dictionary/triple) files into a single HDT file.
+
+Source code
+-----------
+* [GitLab](https://gitlab.com/sapp/conversion)
+
+Command line
+------
+	java -jar conversion-0.0.1-jar-with-dependencies.jar -merge
+
+	Usage: <main class> [options]
+	  Options:
+	    --help
+
+	    -debug
+	       Debug mode
+	       Default: false
+	  * -i, -input
+	       input files (comma separated)
+	  * -m, -merge
+	       Merge RDF files
+	       Default: true
+	  * -o, -output
+	       output file
+
+	  * required parameter
+
+
+Galaxy
+------
+
+### RDF2EMBL
+
+RDF 2 EMBL
+------------
+
+The RDF 2 EMBL module is capable of converting HDT files according to GBOL into a EMBL file.
+
+
+Source code
+-----------
+* [GitLab](https://gitlab.com/sapp/conversion)
+
+Command line
+------
+	java -jar conversion-0.0.1-jar-with-dependencies.jar -rdf2embl
+
+	Usage: <main class> [options]
+	  Options:
+	    --help
+
+	  * -i, -input
+	       input file (HDT - annotated by SAPP / GBOL).
+	  * -o, -output
+	       output embl file
+	  * -rdf2embl
+	       Converting HDT/RDF to EMBL
+	       Default: true
+
+	  * required parameter
+
+Galaxy
+------
+
+### RDF2FASTA
+
+RDF 2 FASTA
+------------
+
+The RDF 2 FASTA module is capable of converting HDT files according to GBOL into various fasta files. Genome, Gene, Protein, tRNA, rRNA creation is currently supported
+
+
+Source code
+-----------
+* [GitLab](https://gitlab.com/sapp/conversion)
+
+Command line
+------
+
+	java -jar conversion-0.0.1-jar-with-dependencies.jar -rdf2fasta
+
+	Usage: <main class> [options]
+	  Options:
+	    --help
+
+	    -gene
+	       Gene file location
+	    -genome
+	       Genome file location
+	  * -i, -input
+	       input GBOL file
+	    -protein
+	       Protein file location
+	    -rdf2fasta
+	       GBOL to FASTA conversion
+	       Default: true
+	    -rrna
+	       rRNA file location
+	    -trna
+	       tRNA file location
+
+	  * required parameter
+
+Galaxy
+------
+
+### RDF2EMBL
+
+RDF 2 GenBank / EMBL
+------------
+
+The RDF 2 GenBank / EMBL module is capable of converting the annotated RDF file towards the GenBank or EMBL format.
+
+Source code
+-----------
+* [GitLab](https://gitlab.com/sapp/rdf2embl)
+
+Command line
+------
+
+	java -jar conversion-0.0.1-jar-with-dependencies.jar -rdf2embl
+
+	Usage: <main class> [options]
+	  Options:
+	    --help
+
+	  * -i, -input
+	       input file (HDT - annotated by SAPP / GBOL).
+	  * -o, -output
+	       output embl file
+	  * -rdf2embl
+	       Converting HDT/RDF to EMBL
+	       Default: true
+
+	  * required parameter
+
+Galaxy
+------
+A galaxy wrapper is included in the project. It requires a RDF file which originated from a genome fasta file. There are a variety of fields to be filled in as can be seen in the figure below.
+
+*Organism name:* A given organism name for the sample
+
+*Strain name:* A given strain name for the sample
+
+*Substrain name:* A given substrain name for the sample
+
+*Keywords:* A list of keys that can be added separated by a comma
+
+*Project identifier:* Identifier for a given project
+
+*Taxon number:* NCBI taxon number
+
+*Locus prefix:* Prefix used for locus tags (e.g. ABC_)
+
+*Scaffold prefix:* Prefix used for each scaffold (e.g. DEF_)
+
+*Journal:* Journal name, volume, pages, year
+
+*Authors:* List of authors involved
+
+*Title:* Title of the article the genome will be published with
+
+*Consortium:* The consortium involved in the project
+
+*Note for each record:* A SAPP template is provided with additional information about contig idenfiers which can be modified after creation.
+
+*Codon table:* The codon table that will be used for the generation of the document
+
+*Output format:* EMBL or GenBank as output format
+
+*Data class selection:* The Whole Genome Shotgun is the most widely used for genome flatfiles
+
+*Gap spanning proteins:* Proteins covering assembly gaps with at least 50% of unknown amino-acids are removed if required.
+
+*Pathway tools compatability:* Pathway tools compatability
+
+![Galaxy](/Users/jasperkoehorst/GitLab/sapp/Manual/site/modules/conversion/images/rdf2flatfile.png)
+
+### RDF2GTF
+
+RDF 2 GTF
+------------
+
+The RDF 2 GTF module is capable of converting HDT files according to GBOL into GTF files
+
+Command line
+------
+
+	java -jar conversion-0.0.1-jar-with-dependencies.jar -rdf2gtf
+
+	Usage: <main class> [options]
+	  Options:
+	    --help
+
+	  * -fout, -fastaout
+	       output fasta file
+	  * -gout, -gtfout
+	       output gtf file
+	  * -i, -input
+	       input file (HDT - annotated by SAPP).
+	  * -rdf2gtf
+	       Converting HDT/RDF to GTF
+	       Default: true
+
+	  * required parameter
+Source code
+-----------
+* [GitLab](https://gitlab.com/sapp/conversion)
+
+
+Galaxy
+------
+
+### Crispr
+
+Crispr predictions
+------------
+
+The Crispr module uses CRT to identify crispr regions in a given genome
+
+
+Dependencies
+------------
+* CRT 1.2.0
+
+Source code
+-----------
+* [GitLab](https://gitlab.com/sapp/crt)
+
+
+Galaxy
+------
+A galaxy wrapper is included in the project. It only requires an RDF file containing a genome sequence.
+
+![Crispr](/Users/jasperkoehorst/GitLab/sapp/Manual/site/modules/geneticelements/images/GalaxyCrispr.png)
+
+
+Structure
+---------
+
+
+![CrisprRDF](/Users/jasperkoehorst/GitLab/sapp/Manual/site/modules/geneticelements/images/RDFCrispr.png)
+
+### Gene prediction
+
+Gene prediction
+------------
+
+The Gene Prediction module uses Prodigal or a naive translation method to identify protein coding genes in a given genome
+
+
+Dependencies
+------------
+* Prodigal 2.6.3
+
+Source code
+-----------
+* [GitLab](https://gitlab.com/sapp/genecaller)
+
+Galaxy
+------
+A galaxy wrapper is included in the project. It only requires an RDF file containing a genome sequence.
+
+![GalaxyCrispr](/Users/jasperkoehorst/GitLab/sapp/Manual/site/modules/geneticelements/images/GalaxyGene.png)
+
+
+Structure
+---------
+
+
+![RDFrRNA](/Users/jasperkoehorst/GitLab/sapp/Manual/site/modules/geneticelements/images/RDFGene.png)
+
+### tRNA/tmRNA
+
+tRNA/tmRNA predictions
+------------
+
+The tRNA/tmRNA module uses Aragorn to identify tRNA/tmRNAs in a given genome
+
+
+Dependencies
+------------
+* Aragorn 1.2.36
+
+
+Source code
+-----------
+* [GitLab](https://gitlab.com/sapp/aragorn)
+
+Galaxy
+------
+A galaxy wrapper is included in the project. It only requires an RDF file containing a genome sequence.
+
+![GalaxytRNAtmRNA](/Users/jasperkoehorst/GitLab/sapp/Manual/site/modules/geneticelements/images/GalaxytRNAtmRNA.png)
+
+
+Structure
+---------
+
+
+![RDFtRNA](/Users/jasperkoehorst/GitLab/sapp/Manual/site/modules/geneticelements/images/RDFtRNAtmRNA.png)
+
+### rRNA
+
+rRNA predictions
+------------
+
+The rRNA module uses RNAmmer to identify rRNA genes in a given genome
+
+
+Dependencies
+------------
+* RNAmmer 1.2
+
+Source code
+-----------
+* [GitLab](https://gitlab.com/sapp/rnammer)
+
+
+Galaxy
+------
+A galaxy wrapper is included in the project. It only requires an RDF file containing a genome sequence.
+
+![GalaxyCrispr](/Users/jasperkoehorst/GitLab/sapp/Manual/site/modules/geneticelements/images/GalaxyrRNA.png)
+
+
+Structure
+---------
+
+
+![RDFrRNA](/Users/jasperkoehorst/GitLab/sapp/Manual/site/modules/geneticelements/images/RDFrRNA.png)
+
+### InterPro
+
+InterPro annotation
+------------
+
+The InterPro module uses InterProscan to identify protein domains.
+
+
+Dependencies
+------------
+* InterProScan 5.19-58.0
+
+Source code
+-----------
+* [GitLab](https://gitlab.com/sapp/interproscan)
+
+
+Galaxy
+------
+A galaxy wrapper is included in the project. It  requires an RDF file containing protein sequences. These proteins can be predicted from the Gene prediction module or from a converted gene or protein fasta file. By default 4 modules are turned off. PIRSF, PROSITE and HAMAP are found to take a considerable amount of time and can increase the analysis time by a hours.
+
+When multiple versions are installed a different version can be selected from the galaxy interface.
+
+It is also possible to set up or use the EBI lookup service. If you use an older version it can be useful to set up your own and modify the interproscan file as this can speed up your analysis considerably.
+
+![GalaxyInterPro](/Users/jasperkoehorst/GitLab/sapp/Manual/site/modules/proteins/images/GalaxyInterpro.png)
+
+
+Structure
+---------
+
+
+![RDFInterPro](/Users/jasperkoehorst/GitLab/sapp/Manual/site/modules/proteins/images/RDFInterPro.png)
+
+### BLAST
+
+BLAST
+------------
+
+The BLAST module uses Diamond to identify protein hits against SwissProt and COG by default and personal diamond databases can be used as well.
+
+
+Dependencies
+------------
+* [Diamond](https://github.com/bbuchfink/diamond)
+* [COG2014](http://www.ncbi.nlm.nih.gov/pubmed/25428365)
+* [SwissProt](http://web.expasy.org/docs/swiss-prot_guideline.html)
+
+Source code
+-----------
+* [GitLab](https://gitlab.com/sapp/Blast)
+
+Galaxy
+------
+A galaxy wrapper is included in the project. It requires an RDF file containing protein sequences.
+
+![GalaxySwissCog](/Users/jasperkoehorst/GitLab/sapp/Manual/site/modules/proteins/images/GalaxySwissCog.png)
+
+
+Structure
+---------
+The structure has been trimmed upto the protein class. Look at the FlatFile converter graph or the Gene prediction graph for details below the Protein class.
+
+![RDFSwissCog](/Users/jasperkoehorst/GitLab/sapp/Manual/site/modules/proteins/images/RDFSwissCog.png)
+
+### Priam
+
+Priam annotation
+------------
+
+The Priam module uses Priam Search to identify protein hits against the Priam database
+
+
+Dependencies
+------------
+* Priam release March 15
+* Priam search 2.0.0
+
+
+Source code
+-----------
+* [GitLab](https://gitlab.com/sapp/priam)
+
+Galaxy
+------
+A galaxy wrapper is included in the project. It requires an RDF file containing protein sequences.
+
+![GalaxyPriam](/Users/jasperkoehorst/GitLab/sapp/Manual/site/modules/proteins/images/GalaxyPriam.png)
+
+
+Structure
+---------
+The structure has been trimmed upto the protein class. Look at the FlatFile converter graph or the Gene prediction graph for details below the Protein class.
+
+![RDFPriam](/Users/jasperkoehorst/GitLab/sapp/Manual/site/modules/proteins/images/RDFPriam.png)
+
+### SignalP
+
+Signal Peptide prediction
+------------
+
+The SignalP module uses SignalP  to identify signal peptides in protein sequences.
+
+
+Dependencies
+------------
+* SignalP 4.1
+
+Source code
+-----------
+* [GitLab](https://gitlab.com/sapp/signalp)
+
+Galaxy
+------
+A galaxy wrapper is included in the project. It requires an RDF file containing protein sequences and in the drop down menu the right type of organism can be selected (Gram+/- or Eukaryote).
+
+![GalaxySwissCog](/Users/jasperkoehorst/GitLab/sapp/Manual/site/modules/proteins/images/GalaxySignalP.png)
+
+
+Structure
+---------
+The structure has been trimmed upto the protein class. Look at the FlatFile converter graph or the Gene prediction graph for details below the Protein class.
+
+![RDFSwissCog](/Users/jasperkoehorst/GitLab/sapp/Manual/site/modules/proteins/images/RDFSignalP.png)
+
+### WoLFPSORT
+
+Location prediction
+------------
+
+The Location module uses WoLFPsort to identify protein localization
+
+
+Dependencies
+------------
+* [WoLFPSORT](https://github.com/fmaguire/WoLFPSort)
+
+Source code
+-----------
+* [GitLab](https://gitlab.com/sapp/WoLFPSort)
+
+
+Galaxy
+------
+A galaxy wrapper is included in the project. It requires an RDF file containing protein sequences and in the drop down menu the right type of organism can be selected (Animal, Plant, Fungi).
+
+![GalaxyWoLFPSORT](/Users/jasperkoehorst/GitLab/sapp/Manual/site/modules/proteins/images/GalaxyWoLFPSORT.png)
+
+
+Structure
+---------
+The structure has been trimmed upto the protein class. Look at the FlatFile converter graph or the Gene prediction graph for details below the Protein class.
+
+![RDFwolfpsort](/Users/jasperkoehorst/GitLab/sapp/Manual/site/modules/proteins/images/RDFwolfpsort.png)
+
+# Installation
+
+INSTALLATION
+------------
+
+ * Most of the SAPP modules can be installed individually using MAVEN or through the provided ./install.sh file inside each module.
+
+ * The SAPP main module contains a galaxy config file allowing you to use the modules inside a clean Galaxy instance as configuration files are currently overwritten.
+
+ * To install the complete package: clone this module inside the tools directory of Galaxy.
+
+
+`git clone https://gitlab.com/sapp/sapp.git`
+
+
+ Note: When using this installation script, a postgresql database is created for Galaxy and extra dependencies are installed which requires root privilages.
+
+ To start the installation procedure: ./install.sh
+
+    cd sapp
+    sudo ./install.sh
+
+
+SUBMODULE INSTALLATION
+------------
+We have developed the SAPP framework in such a way that each module can be installed and run independently of the other developed modules. This allows you to specify which modules are required and to run jobs in parallel. The installation of each module follows the following procedures.
+
+Firstly, the correct gitlab repository needs to be cloned using the `git clone "URL"` command. When cloning is completed an `install.sh` script can be found in the directory which automatically installs the required dependencies and compiles the Java code into an executable. When the installation is successful the jar package can be executed through `java -jar` and a help section with a list of possible commands are shown.
+
+For example, to convert embl or genbank files to the RDF datamodel a conversion module is required.
+
+The correct link to the repository can be found in the submodule on the left and can then be cloned as followed:
+
+`git clone https://gitlab.com/sapp/genbank2rdf`
+```
+Cloning into 'genbank2rdf'...
+remote: Counting objects: 330, done.
+remote: Compressing objects: 100% (122/122), done.
+remote: Total 330 (delta 100), reused 243 (delta 70)
+Receiving objects: 100% (330/330), 27.57 MiB | 2.76 MiB/s, done.
+Resolving deltas: 100% (100/100), done.
+Checking connectivity... done.
+```
+
+To compile the program we move into the directory and run the installation script
+
+`cd genbank2rdf`
+`./install.sh`
+
+This will run a series of tests to validate the code and compile the program
+
+```
+Already up-to-date.
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running nl.wur.ssb.GenBank2RDF.AppTest
+AAGK01000009.gz
+/Users/sapp/.m2/repository/com/github/sapp/RDFSimpleCon/991e0ab/temp/AAGK01000009.gz
+Creating file: /Users/sapp/.m2/repository/com/github/sapp/RDFSimpleCon/991e0ab/temp/AAGK01000009.gz
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/Users/sapp/.m2/repository/org/slf4j/slf4j-log4j12/1.7.12/slf4j-log4j12-1.7.12.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/Users/sapp/.m2/repository/org/apache/logging/log4j/log4j-slf4j-impl/2.2/log4j-slf4j-impl-2.2.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+Parsing as EMBL GZip
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.15 sec
+
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+
+Adding org.apache.maven.scm.provider.ScmProvidersvn
+Component: org.apache.maven.scm.provider.ScmProvidersvn is already defined. Skipping.
+```
+
+Once the installation is completed the following jar file should appear in the directory.
+
+`GenBank2RDF-0.0.1-jar-with-dependencies.jar`
+
+Which can then be executed using:
+
+`java -jar GenBank2RDF-0.0.1-jar-with-dependencies.jar `
+
+returning the options that can be given to the application
+
+```
+org.apache.commons.cli.MissingOptionException: Missing required options: i, o, format, codon, s
+usage: Missing arguments, possible options see below
+ -codon <4/11>                  Codon table used
+ -format <gbk/embl>             EMBL/Genbank format used
+ -i,--input <file>              Fasta file input
+ -id <identifier>               Genome identification tag if required
+ -o,--output <file>             Output filename
+ -s,--source <NCBI/RAST/SAPP>   Source of genbank (NCBI/RAST/SAPP)
+```
+
+# Requirements
+
+REQUIREMENTS
+------------
+
+SAPP is depending on various modules which will be installed when you follow the installation procedure via install.sh
+
+The core of SAPP is based on JAVA 1.8 using MAVEN dependencies. To know more about maven have a look at [https://maven.apache.org](https://maven.apache.org).
+
+All modules have been tested on Ubuntu 16.04 using either Docker or a standalone ubuntu server.
+
+Databases as well as certain software packeges ( e.g. interproscan) are downloaded upon installation of this module. When performing a reinstallation, folders are checked for existence and downloads are skipped accordingly. When during instalation a download becomes corrupted the corresponding folders or files are required to be removed manually.
+
+The current installation used in-house is approxiamtely 160 gigabyte and can increase as for example the HMM module differs in size according to the running settings used.
+
+# Contributors
+
+Contributors
+------------
+
+**Main developers**
+
+* Jasper Koehorst
+* Jesse van Dam
+
+**Module contributors**
+
+* Benoit Carreres - Transcriptomics / GeneCaller / Conversion
+* Arne B. Gjuvsland - Phobius
+
+# Reproducibility
+
+>This Section has been created to provide a guideline on reproducing the results from the following articles
+
+
+Protein domain architectures provide a fast, efficient and scalable alternative to sequence-based methods for comparative functional genomics
+--------
+
+###### Obtaining the software
+The platform can be downloaded and installed using the installation procedure as shown on the left under the 'Installation' section or install the following modules independently.
+
+```
+git clone https://gitlab.com/sapp/genbank2rdf
+Followed by running the install.sh script inside the genbank2rdf folder
+git clone https://gitlab.com/sapp/genecaller
+Followed by running the install.sh script inside the genecaller folder
+git clone https://gitlab.com/sapp/interproscan
+Followed by running the install.sh script inside the interproscan folder
+```
+
+###### Annotation of the genomes
+To annotate the genomes the EMBL files can be retrieved from the ENA website.
+For example GCA_000019445 in the paper links to the following website [http://www.ebi.ac.uk/ena/data/view/GCA_000019445](). In the Chromosomes section the entire genome can be retrieved using the **TEXT** view.
+
+Once the genome is downloaded re-annotation can be initiated either through the complete SAPP framework or through the specific modules installed above.
+
+####### Conversion
+
+To convert the genome the genbank2rdf module can be started from within the folder by executing the following line:
+
+```
+java -jar GenBank2RDF-0.0.1-jar-with-dependencies.jar
+```
+
+This will provide you an overview with the commands that can be used for the annotation:
+
+```
+ -c,--codon <4/11>               Codon table used
+ -f,--format <gbk/embl>          EMBL/Genbank format used
+ -i,--input <file>               Fasta file input
+ -id,--identifier <identifier>   Genome identification tag if required
+ -o,--output <file>              Output filename
+ -s,--source <NCBI/RAST/SAPP>    Source of genbank (NCBI/RAST/SAPP)
+```
+
+The following command then allows you to convert the genome file to a RDF database that can be used for further annotation.
+
+```
+java -jar GenBank2RDF-0.0.1-jar-with-dependencies.jar --input GCA_000019445 --output GCA_000019445.hdt --codon 11 --format embl --identifier GCA_000019445 --source ENA
+
+Parsing as EMBL
+NTRIPLES: /var/folders/vp/w1zw990x6bn8v_w8km1r78mc0000gn/T/tmp2613306144392291389.nt
+File converted in: 1 sec 572 ms 269 us
+HDTSAVE: GCA_000019445.hdt
+```
+
+The GCA_000019445.hdt file can then be used for gene prediction and is then complemented with protein domain annotation.
+
+####### Gene prediction
+
+To identify the commands used for gene prediction just run the application without any extra arguments.
+
+```
+java -jar genecaller-0.0.1-jar-with-dependencies.jar
+org.apache.commons.cli.MissingOptionException: Missing required options: i, o, c, r
+usage: Missing arguments, possible options see below
+ -c,--codon <integer>   Codon table
+ -i,--input <file>      Fasta file input
+ -o,--output <file>     Output filename
+ -r,--runtype <name>    Run type options (single/meta/naive/augustus)
+ -t,--transcriptome     Use transcriptome for gene prediction? Only useful
+                        for augustus...
+```
+
+The following command then allows you to perform the gene prediction using the specific codon table and corresponding input / output files.
+
+```
+java -jar genecaller-0.0.1-jar-with-dependencies.jar --input GCA_000019445.hdt --output GCA_000019445_gene.hdt --runtype single --codon 11
+
+Could not read .hdt.index, Generating a new one.
+Predicate Bitmap in 28 ms 583 us
+Count predicates in 69 ms 323 us
+Count Objects in 22 ms 7 us Max was: 24891
+Bitmap in 2 ms 922 us
+Object references in 33 ms 971 us
+Sort object sublists in 43 ms 599 us
+Count predicates in 7 ms 151 us
+Index generated in 110 ms 408 us
+time: 302 for query queries/getGenome.txt
+binaries/mac/prodigal/2.6.3/prodigal
+./GeneCaller/temp/prodigal
+Creating file: ./GeneCaller/temp/prodigal
+./GeneCaller/temp/prodigal -q -f gff  -o GCA_000019445.hdt_genecaller.gff -a GCA_000019445.hdt_proteins.fasta -p single -g 11 -t GCA_000019445.hdt_genecaller.trn -d GCA_000019445.hdt_nucleotide.fasta -i GCA_000019445.hdt.fasta
+./GeneCaller/temp/prodigal -q -f gff -o GCA_000019445.hdt_genecaller.gff -a GCA_000019445.hdt_proteins.fasta -p single -g 11 -t GCA_000019445.hdt_genecaller.trn -d GCA_000019445.hdt_nucleotide.fasta -i GCA_000019445.hdt.fasta
+NTRIPLES: /var/folders/vp/w1zw990x6bn8v_w8km1r78mc0000gn/T/tmp8756692358011294498.nt
+HDT2RDF: /var/folders/vp/w1zw990x6bn8v_w8km1r78mc0000gn/T/tmp8756692358011294498.nt
+File converted in: 2 sec 301 ms 810 us
+HDTSAVE: GCA_000019445_gene.hdt
+```
+
+This will then generate the output file GCA_000019445_gene.hdt which holds the original annotation and the newly added gene prediction information.
+
+####### Protein domain annotation using PFAM
+
+The InterProScan module can then be used to annotate the original and newly identified genes with protein domains.
+
+Execution is then as follow:
+
+```
+java -jar interproscanRDF-0.0.1-jar-with-dependencies.jar
+org.apache.commons.cli.MissingOptionException: Missing required options: i, o, v, f
+usage: Missing arguments, possible options see below
+ -a,--applications <p>              Applications (TIGRFAM,...)
+ -dp,--disableprecalc               Disable precalculation lookup
+ -f,--format <TURTLE>               RDF format (TURTLE)
+ -i,--input <file>                  Fasta file input
+ -java <path to java if required>   If the default java is not 1.8 a path
+                                    can be given to 1.8
+ -o,--output <file>                 Output filename
+ -v,--version <name>                Version of interproscan
+                                    <interproscan-5.13-52.0>
+```
+
+This then results in the following command that is to be used for PFAM annotation.
+
+```
+java -jar interproscanRDF-0.0.1-jar-with-dependencies.jar --applications PFAM --disableprecalc --input GCA_000019445_gene.hdt --output GCA_000019445_gene_interproscan.hdt --version interproscan-5.19-58.0...
+...
+
+```
+
+
+####### Retrieval of the gene prediction variation
+
+To identify the impact of re-annotation the following query can be used
+
+```
+PREFIX ssb:<http://csb.wur.nl/genome/>
+PREFIX biopax:<http://www.biopax.org/release/bp-level3.owl#>
+SELECT (COUNT(DISTINCT(?feature)) AS ?old) (COUNT(DISTINCT(?feature2)) AS ?new)
+WHERE {
+?genome a ssb:Genome .
+  ?genome ssb:dnaobject ?dna .
+
+  {
+    ?dna ssb:feature ?feature .
+    ?feature a ssb:Gene .
+	?feature ssb:source "ENA" .
+  } UNION {
+    ?dna ssb:feature ?feature2 .
+    ?feature2 a ssb:Gene .
+    ?feature2 ssb:tool 'prodigal' .
+  }
+} group by ?genome
+```
+
+The results should look as follows:
+
+```
+old		new
+5309	5237
+```
+
+####### Retrieval of protein domain positioning
+To retrieve the protein domain architecture the following query can be exectuted:
+
+```
+PREFIX ssb:<http://csb.wur.nl/genome/>
+PREFIX biopax:<http://www.biopax.org/release/bp-level3.owl#>
+SELECT ?protein ?begin ?end ?id
+WHERE {
+?genome a ssb:Genome .
+  ?genome ssb:dnaobject ?dna .
+  ?dna ssb:feature ?feature .
+  ?feature a ssb:Gene .
+  ?feature ssb:tool 'prodigal' .
+  ?feature ssb:protein ?protein .
+  ?protein ssb:feature ?domain .
+  ?domain ssb:begin ?begin .
+  ?domain ssb:end ?end .
+  ?domain ssb:signature ?signature .
+  ?signature biopax:xref ?xref .
+  ?xref biopax:db 'pfam' .
+  ?xref biopax:id ?id .
+} ORDER BY ?protein
+LIMIT 10
+```
+
+The results should look as follows:
+
+```
+protein	begin	end	id
+<http://csb.wur.nl/genome/protein/0001ddf3c7eee954cc481996921953239fb16ee7e2e3814f7ec28b8e50519c096b0dfa2875ac7b94443fd3ba184e6ca2>	99	248	PF13614
+<http://csb.wur.nl/genome/protein/0005673dc74fe4b897e6c7cccba038f08208140390fda3840881992875abd0d1a482843babf08e8eeea0aaa98e919e97>	35	400	PF00282
+<http://csb.wur.nl/genome/protein/000f110bec8d8a72966691a835165f00343fbad5d571b929cda2fcc013be018e1c814ff9832001a6614968e9ca093361>	3	113	PF00072
+<http://csb.wur.nl/genome/protein/000f110bec8d8a72966691a835165f00343fbad5d571b929cda2fcc013be018e1c814ff9832001a6614968e9ca093361>	146	221	PF00486
+<http://csb.wur.nl/genome/protein/000ff46897e1dc61b60b5f2d8986daa364ec8438ec5d9c54723109c567f1a4f5b54e48cddcec0fdfa42463d0172d3dbb>	3	95	PF00163
+<http://csb.wur.nl/genome/protein/000ff46897e1dc61b60b5f2d8986daa364ec8438ec5d9c54723109c567f1a4f5b54e48cddcec0fdfa42463d0172d3dbb>	97	143	PF01479
+<http://csb.wur.nl/genome/protein/0015156ca8be0f3d7c0115fc414bc7abf5a807d53e75791936baa4a129df63272ca7aad4c470c5a609b110e8056399f4>	3	187	PF00106
+<http://csb.wur.nl/genome/protein/0028e4cd024faffd01edbcbd52f6ddf480cc221f0e5d74d8a4697616d031f40d764a79fdff0624656b645b38142e3d7f>	69	144	PF08479
+<http://csb.wur.nl/genome/protein/0030dda76e1268aea6e0bd9f698cbffc253c4c7eeae7b3d1cc951f8718e20aad143b0c2ce4f6de5a0f69a6b20d7163d4>	86	135	PF11776
+<http://csb.wur.nl/genome/protein/0039c329dbc06ac02601f30384d540c07fec471fcd53c6c709df6fec3d9e7d02d0c0a0f87b0b56e9d1a3dc09d058e8df>	4	72	PF13411
+```
+
