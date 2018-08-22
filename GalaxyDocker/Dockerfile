@@ -62,7 +62,8 @@ RUN install-tools $GALAXY_ROOT/TODO.yml
 #######################################################
 ################## iBioSystems ########################
 
-#ENV GALAXY_CONFIG_BRAND=“iBioSystems”
+ENV GALAXY_CONFIG_BRAND="iBioSystems"
+COPY ./welcome/ $GALAXY_CONFIG_DIR/web/
 # Welcome.html
 
 #######################################################
